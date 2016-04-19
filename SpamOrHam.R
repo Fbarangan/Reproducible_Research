@@ -38,4 +38,24 @@ for (i in 1:55) {
 # which predictor has the minimum cross-validated error ?
 names(trainSpam[which.min(cvError)])
 
+# Use the best model based on the min cross-validated error
+predictionModel <- glm(numType ~ charDollar, family = "binomial", data = trainSpam)
 
+# Get prediction on the test set
+predictionTest <- predict(predictionModel, testSpam)
+
+#This is just a placeholder, again... it labelled all the observation as "nonspam"
+#then based on the logic below it will override those  prob > 0.5 with the word "spam"
+predictedSpam <- rep("nonspam", dim(testSpam)[1])
+
+## Classify as "Spam for those with prob >0.5
+predictedSpam[predictionModel$fitted.values >0.5] = "spam"
+
+#Classification Table
+table(predictedSpam, testSpam$type)
+
+# Then calculate for the error. actually this is like NPV negative predictive value
+# calculate diagonal
+# in other words, the predictedSpam was 61 was classified as spam but should
+# be nonspam, 458 was clasiffied as spam but should be nonspam
+(61 + 458 ) / (1346 + 458 + 61 + 449 )
