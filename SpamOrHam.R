@@ -1,4 +1,19 @@
 # Spam or Ham
+library(kernlab)
+data(spam)
+
+# Perform random sampling
+set.seed(3435)
+trainIndicator <- rbinom(4601, size = 1, prob = 0.5)
+
+# check table to see the above random result
+table(trainIndicator)
+
+# divide the data set into train and test
+trainSpam <- spam[trainIndicator == 1,]
+testSpam <- spam[trainIndicator == 0,]
+
+
 # Training set
 # Change the type into a numeric , the add as another variable
 # # This will change nonspam = 0 and Spam into 1
@@ -22,3 +37,5 @@ for (i in 1:55) {
 
 # which predictor has the minimum cross-validated error ?
 names(trainSpam[which.min(cvError)])
+
+
