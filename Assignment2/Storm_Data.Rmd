@@ -1,0 +1,43 @@
+---
+title: "Storm_Data"
+author: "Felix Barangan"
+date: "May 7, 2016"
+output: html_document
+---
+## Summary Title
+### Briefly summarize the data analysis
+The basic goal of this assignment is to explore the NOAA Storm Database and answer some basic questions about severe weather events. You must use the database to answer the questions below and show the code for your entire analysis. Your analysis can consist of tables, figures, or other summaries. You may use any R package you want to support your analysis.
+### Synopsis
+Synopsis: Immediately after the title, there should be a synopsis which describes and summarizes your analysis in at most 10 complete sentences.
+
+## Data Transformation
+### Data Processing
+There should be a section titled Data Processing which describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any preprocessing outside the document. If preprocessing is time-consuming you may consider using the cache = TRUE option for certain code chunks.
+                 
+*** 
+
+- start from the raw data file (i.e. the original .csv.bz2 file)
+        
+describes how the data were loaded into R and processed for analysis?
+### Description and Justification of the data transformation
+
+## Results
+
+### Discussions.
+                       
+1. which types of events are most harmful to population health?
+Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
+
+2.  which types of events have the greatest economic consequences?
+Across the United States, which types of events have the greatest economic consequences?
+        
+main results are presented
+
+### Plots
+Show at least 3 figures Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
+
+### Note
+You must show all your code for the work in your analysis document. This may make the document a bit verbose, but that is okay. In general, you should ensure that echo = TRUE for every code chunk (this is the default setting in knitr).
+
+
+
