@@ -4,16 +4,54 @@ author: "Felix Barangan"
 date: "May 7, 2016"
 output: html_document
 ---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=3, fig.height=3,
+                      echo=TRUE, warning=FALSE, message=FALSE, results = TRUE)
+        
+```
+
+```{r load library, echo = TRUE, results="hide"}
+# Load libraries
+library(dplyr)
+library(knitr)
+library(xtable)
+```
+        
+                         
+                
+
 ## Summary Title
 ### Briefly summarize the data analysis
 The basic goal of this assignment is to explore the NOAA Storm Database and answer some basic questions about severe weather events. You must use the database to answer the questions below and show the code for your entire analysis. Your analysis can consist of tables, figures, or other summaries. You may use any R package you want to support your analysis.
+
 ### Synopsis
 Synopsis: Immediately after the title, there should be a synopsis which describes and summarizes your analysis in at most 10 complete sentences.
-
+                
 ## Data Transformation
+Please set R and Rstudio to the correct and desired directory.
+```{r check directory, results=TRUE}
+# Please point your R/Rstudion to the desired Directory
+getwd()
+```
+                               
+### Data extraction
+Data downloaded and extracted to the designated file folder location. for OSX user, it is advisable to set metho="curl" when downloading https. Otherwise knit may not work.
+```{r Create and save file }
+if (!file.exists("stormData")) {
+        dir.create("stormData")
+}              
+       
+fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
+destfile <- "./stormData/storm_data.zip"
+        
+download.file(url = fileUrl, destfile = destfile, method = "curl")
+```
+                            
+                    
 ### Data Processing
 There should be a section titled Data Processing which describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any preprocessing outside the document. If preprocessing is time-consuming you may consider using the cache = TRUE option for certain code chunks.
-                 
+                            
 *** 
 
 - start from the raw data file (i.e. the original .csv.bz2 file)
