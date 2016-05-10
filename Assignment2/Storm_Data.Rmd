@@ -36,18 +36,21 @@ getwd()
 ```
                                
 ### Data extraction
-Data downloaded and extracted to the designated file folder location. for OSX user, it is advisable to set metho="curl" when downloading https. Otherwise knit may not work.
+* Data downloaded and extracted to the designated file folder location. for OSX user, it is advisable to set metho="curl" when downloading https. Otherwise knit may not work. 
+
 ```{r Create and save file }
-if (!file.exists("stormData")) {
-        dir.create("stormData")
-}              
-       
+if (!file.exists("stormData")) {dir.create("stormData")}              
+                
 fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
 destfile <- "./stormData/storm_data.zip"
-        
-download.file(url = fileUrl, destfile = destfile, method = "curl")
+                
+download.file( url = fileUrl, destfile = destfile, method = "curl")
+dateDownloaded <- date()
+
+rawStormData <- read.csv("./stormData/storm_data", header = TRUE)     
 ```
-                            
+                
+                          
                     
 ### Data Processing
 There should be a section titled Data Processing which describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any preprocessing outside the document. If preprocessing is time-consuming you may consider using the cache = TRUE option for certain code chunks.
