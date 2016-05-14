@@ -242,3 +242,13 @@ stormData <- rbind(rawStormDataDF_stormSurge,
                    rawStormDataDF_Fire,
                    rawStormDataDF_Sea,
                    rawStormDataDF_Others)
+
+# Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
+
+Population_Health <- stormData %>%
+                        group_by(Event_Type) %>%
+                        summarise(Fatalities = sum(Fatalities),
+                                  Injuries = sum(Injuries),
+                                  n = n()) %>%
+                        arrange(Fatalities = desc(Fatalities),
+                                Injuries = desc(Injuries))
