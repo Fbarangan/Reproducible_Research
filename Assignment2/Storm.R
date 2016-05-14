@@ -7,8 +7,11 @@
 #
 # Title
 #
+install.packages("dplyr")
+library(dplyr)
 install.packages("rio")
 library(rio)
+
 
 if (!file.exists("stormData")) {dir.create("stormData")}
 
@@ -45,5 +48,38 @@ rawStormDataDF_wintry <- rawStormDataDF_ %>%
         select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
         filter(Event_Type %in% c("snow","ice","wintry","freez","blizzard","cold|winter"))
 
+# Rain
+rawStormDataDF_Rain <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type %in% c("rain","shower"))
 
+# Wind
+rawStormDataDF_wind <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type %in% c("wind"))
+
+# Hurricane
+rawStormDataDF_Hurricane <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type %in% c("hurricane","tropical","typhoon"))
+
+# Dry
+rawStormDataDF_Dry_weather <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type %in% c("dry","drought"))
+
+# Heat
+rawStormDataDF_Heat <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type %in% c("heat","warm"))
+
+# Hail
+rawStormDataDF_Hail <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type %in% c("Hail"))
+
+# Fire
+rawStormDataDF_Fire <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type %in% c("fire"))
 
