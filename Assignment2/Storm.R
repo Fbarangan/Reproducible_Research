@@ -9,8 +9,6 @@
 #
 install.packages("dplyr")
 library(dplyr)
-install.packages("rio")
-library(rio)
 
 
 if (!file.exists("stormData")) {dir.create("stormData")}
@@ -55,6 +53,7 @@ rawStormDataDF_flood$Event_Type <- "Flood"
 rawStormDataDF_tornado <- StormDataDF_Fatalities_Injury %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
         filter(Event_Type  %in% c("tornado","waterspout/tornado"))
+
 # Rename Event Type to tornado
 rawStormDataDF_tornado$Event_Type <- "Tornado"
 
@@ -128,7 +127,7 @@ rawStormDataDF_Fire$Event_Type <- "Fire"
 # 12 Sea Mishap
 rawStormDataDF_Sea <- StormDataDF_Fatalities_Injury %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
-        filter(Event_Type %in% c("rip current","rough surf","strong winds","tsunami","high surf","marine accident","marine thunderstorm wind","marine mishap","rip currents","high wind and seas","heavy surf","heavy surf/high surf"))
+        filter(Event_Type %in% c("rip current","rough surf","tsunami","high surf","marine accident","marine thunderstorm wind","marine mishap","rip currents","high wind and seas","heavy surf","heavy surf/high surf"))
 
 # Rename Event type too Sea Mishap
 rawStormDataDF_Sea$Event_Type <- "Sea Mishap"
@@ -141,21 +140,50 @@ rawStormDataDF_Others <- StormDataDF_Fatalities_Injury %>%
                 Event_Type != "coastal storm",
                 Event_Type != "dust storm",
                 Event_Type != "tropical storm",
+
                 Event_Type != "flooding",
                 Event_Type != "flood",
                 Event_Type != "flash flood",
                 Event_Type != "flood/flash flood",
                 Event_Type != "urban/sml stream fld",
+
                 Event_Type != "tornado",
                 Event_Type != "waterspout/tornado",
-                Event_Type != "tornado",
-                Event_Type != "waterspout/tornado",
+
+                Event_Type !=  "ice storm",
+                Event_Type !=  "ice",
+                Event_Type !=  "black ice",
+                Event_Type !=  "winter storm",
+                Event_Type !=  "winter storms",
+                Event_Type !=  "winter storm high winds",
+                Event_Type !=  "winter weather/mix",
+                Event_Type !=  "cold",
+                Event_Type !=  "thundersnow",
+                Event_Type !=  "heavy snow",
+                Event_Type !=  "blowing snow",
+                Event_Type != "snow",
+                Event_Type !=  "rain/snow",
+                Event_Type !=  "light snow",
+                Event_Type !=  "freezing rain",
+                Event_Type !=  "extreme windchill",
+                Event_Type !=  "blizzard",
+                Event_Type !=  "extreme cold",
+                Event_Type !=  "icy roads",
+                Event_Type !=  "avalanche",
+                Event_Type !=  "winter weather",
+                Event_Type !=  "extreme cold/wind chill",
+                Event_Type !=  "fog and cold temperatures",
+                Event_Type !=  "freezing drizzle",
+                Event_Type !=  "cold/wind chill",
+
                 Event_Type != "rain",
                 Event_Type != "heavy rain",
                 Event_Type != "excessive rainfall",
                 Event_Type != "dense fog",
                 Event_Type != "fog",
+
                 Event_Type != "lightning",
+
                 Event_Type != "wind",
                 Event_Type != "tstm wind",
                 Event_Type != "high wind",
@@ -166,19 +194,24 @@ rawStormDataDF_Others <- StormDataDF_Fatalities_Injury %>%
                 Event_Type != "marine strong wind",
                 Event_Type != "high winds",
                 Event_Type != "thunderstorm wind",
+
                 Event_Type != "hurricane",
                 Event_Type != "typhoon",
                 Event_Type != "hurricane/typhoon",
                 Event_Type != "tropical storm gordon",
+
                 Event_Type != "heat",
                 Event_Type != "heat wave",
                 Event_Type != "excessive heat",
                 Event_Type != "heat wave drought",
+
                 Event_Type != "hail",
                 Event_Type != "tstm wind/hail",
+
                 Event_Type != "wild fires",
                 Event_Type != "wild/forest fire",
                 Event_Type != "wildfire",
+
                 Event_Type != "rip current",
                 Event_Type != "rough surf",
                 Event_Type != "strong winds",
