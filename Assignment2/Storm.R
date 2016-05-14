@@ -46,7 +46,7 @@ rawStormDataDF_tornado <- rawStormDataDF_ %>%
 # Wintry
 rawStormDataDF_wintry <- rawStormDataDF_ %>%
         select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
-        filter(Event_Type %in% c("snow","ice","wintry","freez","blizzard","cold|winter"))
+        filter(Event_Type %in% c("snow","ice","wintry","freeze","blizzard","cold","winter"))
 
 # Rain
 rawStormDataDF_Rain <- rawStormDataDF_ %>%
@@ -76,10 +76,35 @@ rawStormDataDF_Heat <- rawStormDataDF_ %>%
 # Hail
 rawStormDataDF_Hail <- rawStormDataDF_ %>%
         select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
-        filter(Event_Type %in% c("Hail"))
+        filter(Event_Type %in% c("hail"))
 
 # Fire
 rawStormDataDF_Fire <- rawStormDataDF_ %>%
         select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
         filter(Event_Type %in% c("fire"))
+# Others
+rawStormDataDF_Others <- rawStormDataDF_ %>%
+        select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES) %>%
+        filter(Event_Type != "storm surge",
+               Event_Type != "flood",
+               Event_Type != "tornado",
+               Event_Type != "snow",
+               Event_Type != "ice",
+               Event_Type != "wintry",
+               Event_Type != "freeze",
+               Event_Type != "blizzard",
+               Event_Type != "cold",
+               Event_Type != "winter",
+               Event_Type != "rain",
+               Event_Type != "shower",
+               Event_Type != "wind",
+               Event_Type != "hurricane",
+               Event_Type != "tropical",
+               Event_Type != "typhoon",
+               Event_Type != "dry",
+               Event_Type != "drought",
+               Event_Type != "heat",
+               Event_Type != "warm",
+               Event_Type != "hail",
+               Event_Type != "fire")
 
