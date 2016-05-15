@@ -9,6 +9,7 @@
 #
 install.packages("dplyr")
 library(dplyr)
+library(ggplot2)
 
 
 if (!file.exists("stormData")) {dir.create("stormData")}
@@ -252,3 +253,61 @@ Population_Health <- stormData %>%
                                   n = n()) %>%
                         arrange(Fatalities = desc(Fatalities),
                                 Injuries = desc(Injuries))
+
+# Question 2
+# Across the United States, which types of events have the greatest economic consequences?
+
+StormDataDF_Economic_ <- rawStormDataDF_ %>%
+                                select(State = STATE, Property_Damage = PROPDMG, Property_Expo =  (PROPDMGEXP),
+                                                      Crop_Damage = CROPDMG,     Crop_Expo = (CROPDMGEXP)) %>%
+                                filter( Property_Damage > 0 & Crop_Damage > 0)
+# Change Exponent to all uppercase
+StormDataDF_Economic_$Property_Expo <- toupper(StormDataDF_Economic_$Property_Expo)
+StormDataDF_Economic_$Crop_Expo <- toupper(StormDataDF_Economic_$Crop_Expo )
+
+#  selected and Replace Property damge Expo "K", "M", and "B" with 1,000, ; 1,000,000 and 1,000,000,000 respectively
+StormDataDF_Economic_Property_Values_K <- StormDataDF_Economic_ %>%
+                                        filter (Property_Expo = (Property_Expo == "K")) %>%
+                                        select(State, Property_Damage, Property_Expo,
+                                               Crop_Damage, Crop_Expo ) %>%
+                                        mutate(Property_Expo = 1000 )
+
+StormDataDF_Economic_Property_Values_M <- StormDataDF_Economic_ %>%
+                                        filter (Property_Expo = (Property_Expo == "M")) %>%
+                                        select(State, Property_Damage, Property_Expo,
+                                                Crop_Damage, Crop_Expo ) %>%
+                                        mutate(Property_Expo = 1000000 )
+
+StormDataDF_Economic_Property_Values_B <- StormDataDF_Economic_ %>%
+        filter (Property_Expo = (Property_Expo == "B")) %>%
+        select(State, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Property_Expo = 1000000000 )
+
+
+
+
+# selected and Replace Crop damge Expo "K", "M", and "B" with 1,000, ; 1,000,000 and 1,000,000,000 respectively
+StormDataDF_Economic_Crop_Values_K <- StormDataDF_Economic_ %>%
+        filter (Property_Expo = (Crop_Damage == "K")) %>%
+        select(State, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Crop_Damage = 1000 )
+
+StormDataDF_Economic_Crop_Values_M <- StormDataDF_Economic_ %>%
+        filter (Property_Expo = (Crop_Damage == "M")) %>%
+        select(State, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Crop_Damage = 1000000 )
+
+StormDataDF_Economic_Crop_Values_B <- StormDataDF_Economic_ %>%
+        filter (Property_Expo = (Crop_Damage == "B")) %>%
+        select(State, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Crop_Damage = 1000000000 )
+
+# select all other except those wit h EXP K, M, and B
+StormDataDF_Economic_All_Others <- StormDataDF_Economic_ %>%
+                                        filter (Property_Expo = (Crop_Damage == "B")) %>%
+                                        select(State, Property_Damage, Property_Expo, Crop_Damage, Crop_Expo ) %>%
+                                        mutate(Crop_Damage = 1000000000 )
