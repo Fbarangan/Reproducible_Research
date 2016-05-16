@@ -249,67 +249,73 @@ StormDataDF_Economic_Property_Values_B <- StormDataDF_Economic_ %>%
                                                Crop_Damage, Crop_Expo ) %>%
                                         mutate(Property_Expo = 1000000000 )
 
+# selected and Replace Property damge Expo "" with 1
+StormDataDF_Economic_Property_Values_Null <- StormDataDF_Economic_ %>%
+                                        filter (Property_Expo = (Property_Expo == "")) %>%
+                                        select(State, Event_Type, Property_Damage, Property_Expo,
+                                                Crop_Damage, Crop_Expo ) %>%
+                                        mutate(Property_Expo = 1 )
+
+# select columns excluding those with 1,1000, 1000000, 1000000000
+StormDataDF_Economic_Property_Values_others <- StormDataDF_Economic_ %>%
+                                        filter (Property_Expo != "",
+                                                Property_Expo != "K",
+                                                Property_Expo != "M",
+                                                Property_Expo != "B") %>%
+                                        select(State, Event_Type, Property_Damage, Property_Expo,
+                                                Crop_Damage, Crop_Expo )
+
+# Combined all
+stormProperty_value_Cleaned <- rbind ( StormDataDF_Economic_Property_Values_K,
+                                       StormDataDF_Economic_Property_Values_M,
+                                       StormDataDF_Economic_Property_Values_B,
+                                       StormDataDF_Economic_Property_Values_Null,
+                                       StormDataDF_Economic_Property_Values_others)
+
+
+#  selected and Replace Crop damge Expo "K", "M", and "B" with 1,000, ; 1,000,000 and 1,000,000,000 respectively
+StormDataDF_Economic_Crop_Values_K <- stormProperty_value_Cleaned %>%
+        filter (Crop_Expo = (Crop_Expo == "K")) %>%
+        select(State, Event_Type, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Crop_Expo = 1000 )
+
+StormDataDF_Economic_Crop_Values_M <- stormProperty_value_Cleaned %>%
+        filter (Crop_Expo = (Crop_Expo == "M")) %>%
+        select(State,Event_Type, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Crop_Expo = 1000000 )
+
+StormDataDF_Economic_Crop_Values_B <- stormProperty_value_Cleaned %>%
+        filter (Crop_Expo = (Crop_Expo == "B")) %>%
+        select(State, Event_Type, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Crop_Expo = 1000000000 )
+
+# selected and Replace Property damge Expo "" with 1
+StormDataDF_Economic_Crop_Values_Null <- stormProperty_value_Cleaned %>%
+        filter (Crop_Expo = (Crop_Expo == "")) %>%
+        select(State, Event_Type, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo ) %>%
+        mutate(Crop_Expo = 1 )
+
+# select columns excluding those with 1,1000, 1000000, 1000000000
+StormDataDF_Economic_Crop_Values_others <- stormProperty_value_Cleaned %>%
+        filter (Crop_Expo != "",
+                Crop_Expo != "K",
+                Crop_Expo != "M",
+                Crop_Expo != "B") %>%
+        select(State, Event_Type, Property_Damage, Property_Expo,
+               Crop_Damage, Crop_Expo )
+
+# Combined all
+stormProperty_Crop_Value_ <- rbind ( StormDataDF_Economic_Crop_Values_K,
+                                       StormDataDF_Economic_Crop_Values_M,
+                                       StormDataDF_Economic_Crop_Values_B,
+                                       StormDataDF_Economic_Crop_Values_Null,
+                                       StormDataDF_Economic_Crop_Values_others)
 
 
 
-# selected and Replace Crop damge Expo "K", "M", and "B" with 1,000, ; 1,000,000 and 1,000,000,000 respectively
-StormDataDF_Economic_Crop_Values_K <- StormDataDF_Economic_ %>%
-                                                filter (Crop_Expo = (Crop_Expo == "K")) %>%
-                                                select(State,Event_Type, Property_Damage, Property_Expo,
-                                                        Crop_Damage, Crop_Expo ) %>%
-                                                mutate(Crop_Expo = 1000 )
-
-StormDataDF_Economic_Crop_Values_M <- StormDataDF_Economic_ %>%
-                                                filter (Crop_Expo = (Crop_Expo == "M")) %>%
-                                                select(State,Event_Type, Property_Damage, Property_Expo,
-                                                        Crop_Damage, Crop_Expo ) %>%
-                                                mutate(Crop_Expo = 1000000 )
-
-StormDataDF_Economic_Crop_Values_B <- StormDataDF_Economic_ %>%
-                                                filter (Crop_Expo = (Crop_Expo == "B")) %>%
-                                                select(State,Event_Type, Property_Damage, Property_Expo,
-                                                       Crop_Damage, Crop_Expo ) %>%
-                                                mutate(Crop_Expo = 1000000000 )
-
-# select all other except those wit h EXP K, M, and B
-StormDataDF_Economic_All_Others <- StormDataDF_Economic_ %>%
-                                        filter (Crop_Expo != "K",
-                                                Crop_Expo != "M",
-                                                Crop_Expo != "B")
-
-x <- c("test1", "test2", "test3", "bad")
-
-length(x)
-category <- function (x) {
-        for (i in 1:length(x))
-                if (x[i] == "storm surge") {
-                x[i] <- "very good"
-                }
-                else
-                  if (x[i] == "coastal storm") {
-                x[i] <- "best"
-                  }
-
-                 if (x[i] == "storm surge") {
-                x[i] <- "very good"
-                 }
-                else
-                if (x[i] == "dust storm") {
-                        x[i] <- "best"
-                }
 
 
-
-
-                Event_Type != "dust storm",
-                Event_Type != "tropical storm",
-
-
-
-
-
-                else
-                x[i] <- "others"
-         x
-
-}
