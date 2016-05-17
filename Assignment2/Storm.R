@@ -17,6 +17,10 @@ if (!file.exists("stormData")) {dir.create("stormData")}
 fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
 destfile <- "./stormData/storm_data.zip"
 
+getwd()
+
+# Set correct working directory
+
 download.file(fileUrl, destfile = destfile)
 dateDownloaded <- date()
 
