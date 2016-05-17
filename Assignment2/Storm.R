@@ -26,6 +26,9 @@ dateDownloaded <- date()
 
 rawStormData <- read.csv("./stormData/storm_data", header = TRUE)
 
+getwd()
+
+# Set correct working directory
 # Change to DPLYR
 rawStormDataDF_ <- tbl_df(rawStormData)
 rawStormDataDF_$EVTYPE <- tolower(rawStormDataDF_$EVTYPE)
