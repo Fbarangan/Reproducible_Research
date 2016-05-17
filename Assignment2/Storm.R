@@ -33,13 +33,8 @@ rawStormDataDF_ <- rawStormDataDF_ %>%
                Property_Damage = PROPDMG, Property_Expo =  (PROPDMGEXP), Crop_Damage = CROPDMG,
                Crop_Expo = (CROPDMGEXP))
 
-#  0 observations for Fatalities and Injuries removed
-StormDataDF_Fatalities_Injury <- rawStormDataDF_ %>%
-        select(State = State, Event_Type = Event_Type, Fatalities = Fatalities, Injuries = Injuries) %>%
-        filter( Fatalities > 0 & Injuries > 0)
-
 # 1 Storm Surge
-rawStormDataDF_stormSurge <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_stormSurge <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
         filter(Event_Type %in% c ("storm surge","coastal storm","dust storm","tropical storm"))
 
@@ -47,7 +42,7 @@ rawStormDataDF_stormSurge <- StormDataDF_Fatalities_Injury %>%
 rawStormDataDF_stormSurge$Event_Type <- "Storm Surge"
 
 # 2 Flood
-rawStormDataDF_flood <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_flood <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries ) %>%
         filter(Event_Type %in% c("flooding","flood","flash flood","flood/flash flood","urban/sml stream fld"))
 
@@ -55,7 +50,7 @@ rawStormDataDF_flood <- StormDataDF_Fatalities_Injury %>%
 rawStormDataDF_flood$Event_Type <- "Flood"
 
 # 3 Tornado
-rawStormDataDF_tornado <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_tornado <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
         filter(Event_Type  %in% c("tornado","waterspout/tornado"))
 
@@ -63,7 +58,7 @@ rawStormDataDF_tornado <- StormDataDF_Fatalities_Injury %>%
 rawStormDataDF_tornado$Event_Type <- "Tornado"
 
 # 4 Wintry
-rawStormDataDF_wintry <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_wintry <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
         filter(Event_Type %in% c("ice storm","ice","black ice","winter storm","winter storms","winter storm high winds","winter weather/mix","cold","thundersnow","heavy snow","blowing snow","snow","rain/snow","light snow","freezing rain","extreme windchill","blizzard","extreme cold","icy roads","avalanche","winter weather","extreme cold/wind chill","fog and cold temperatures","freezing drizzle","cold/wind chill"))
 
@@ -72,7 +67,7 @@ rawStormDataDF_wintry$Event_Type <- Wintry
 
 
 # 5 Rain
-rawStormDataDF_Rain <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_Rain <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
         filter(Event_Type %in% c("rain","heavy rain","excessive rainfall","dense fog","fog"))
 # Rename Event Type to rain
@@ -80,7 +75,7 @@ rawStormDataDF_Rain$Event_Type <- "Rain"
 
 
 #  6 Lightning
-rawStormDataDF_lightning <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_lightning <- rawStormDataDF_ %>%
         select(State , Event_Type , Fatalities , Injuries) %>%
         filter(Event_Type %in% c("lightning"))
 
@@ -88,7 +83,7 @@ rawStormDataDF_lightning <- StormDataDF_Fatalities_Injury %>%
 rawStormDataDF_lightning$Event_Type <- "Lightning"
 
 # 7 Wind
-rawStormDataDF_wind <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_wind <- rawStormDataDF_ %>%
         select(State , Event_Type , Fatalities , Injuries ) %>%
         filter(Event_Type %in% c("wind","tstm wind","high wind","high winds/snow","strong wind","strong winds","thunderstorm winds","marine strong wind","high winds","thunderstorm wind"))
 
@@ -97,7 +92,7 @@ rawStormDataDF_wind$Event_Type
 
 
 # 8 Hurricane
-rawStormDataDF_Hurricane <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_Hurricane <- rawStormDataDF_ %>%
         select(State , Event_Type , Fatalities , Injuries ) %>%
         filter(Event_Type %in% c("hurricane","typhoon","hurricane/typhoon","tropical storm gordon"))
 
@@ -106,7 +101,7 @@ rawStormDataDF_Hurricane$Event_Type <- "Hurricane"
 
 
 # 9 Heat
-rawStormDataDF_Heat <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_Heat <- rawStormDataDF_ %>%
         select(State , Event_Type , Fatalities , Injuries ) %>%
         filter(Event_Type %in% c("heat","heat wave","excessive heat","heat wave drought"))
 
@@ -115,14 +110,14 @@ rawStormDataDF_Heat$Event_Type <- "Heat"
 
 
 # 10 Hail
-rawStormDataDF_Hail <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_Hail <- rawStormDataDF_ %>%
         select(State , Event_Type , Fatalities , Injuries ) %>%
         filter(Event_Type %in% c("hail","tstm wind/hail"))
 # Rename Event Type to Hail
 rawStormDataDF_Hail$Event_Type <- "Hail"
 
 # 11 Fire
-rawStormDataDF_Fire <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_Fire <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
         filter(Event_Type %in% c("wild fires","wild/forest fire","wildfire"))
 # rename Event Type Fire
@@ -130,7 +125,7 @@ rawStormDataDF_Fire$Event_Type <- "Fire"
 
 
 # 12 Sea Mishap
-rawStormDataDF_Sea <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_Sea <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries) %>%
         filter(Event_Type %in% c("rip current","rough surf","tsunami","high surf","marine accident","marine thunderstorm wind","marine mishap","rip currents","high wind and seas","heavy surf","heavy surf/high surf"))
 
@@ -138,7 +133,7 @@ rawStormDataDF_Sea <- StormDataDF_Fatalities_Injury %>%
 rawStormDataDF_Sea$Event_Type <- "Sea Mishap"
 
 # 13 Others
-rawStormDataDF_Others <- StormDataDF_Fatalities_Injury %>%
+rawStormDataDF_Others <- rawStormDataDF_ %>%
         select(State = State, Event_Type = Event_Type, Fatalities = Fatalities, Injuries = Injuries) %>%
         filter( Event_Type != "storm surge", Event_Type != "coastal storm", Event_Type != "dust storm",
                 Event_Type != "tropical storm",
@@ -187,8 +182,6 @@ rawStormDataDF_Others <- StormDataDF_Fatalities_Injury %>%
 # rename Event type to Other
 rawStormDataDF_Others$Event_Type <- "Others"
 
-# Select only those fatalities and Injury > 0
-
 
 #Combine all cleaned tables
 stormData <- rbind(rawStormDataDF_stormSurge,
@@ -205,9 +198,16 @@ stormData <- rbind(rawStormDataDF_stormSurge,
                    rawStormDataDF_Sea,
                    rawStormDataDF_Others)
 
+
+#  0 observations for Fatalities and Injuries removed
+StormDataDF_Fatalities_Injury <- stormData %>%
+        select(State = State, Event_Type = Event_Type, Fatalities = Fatalities, Injuries = Injuries) %>%
+        filter( Fatalities > 0 & Injuries > 0)
+
+
 # Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
 
-Population_Health <- stormData %>%
+Population_Health <- StormDataDF_Fatalities_Injury %>%
                         group_by(Event_Type) %>%
                         summarise(Fatalities = sum(Fatalities),
                                   Injuries = sum(Injuries),
@@ -220,11 +220,13 @@ Population_Health <- stormData %>%
 
 # Select Variable exluding thse with 0 value for Property Damage and Crop Damage
 StormDataDF_Economic_ <- rawStormDataDF_ %>%
-                                select(State = State, Event_Type = Event_Type, Property_Damage = Property_Damage,
-                                        Property_Expo =  Property_Expo, Crop_Damage = Crop_Damage,
-                                        Crop_Expo = Crop_Expo) %>%
+                                select (State = State, Event_Type = Event_Type, Property_Damage = as.integer(Property_Damage),
+                                       Property_Expo = Property_Expo, Crop_Damage = as.integer(Crop_Damage), Crop_Expo = Crop_Expo) %>%
                                 filter( Property_Damage > 0 & Crop_Damage > 0)
 
+
+StormDataDF_Economic_$Property_Expo <- as.character(Property_Expo)
+StormDataDF_Economic_$Crop_Expo <- as.character(Crop_Expo)
 
 # Change Exponent to all uppercase
 StormDataDF_Economic_$Property_Expo <- toupper(StormDataDF_Economic_$Property_Expo)
@@ -235,26 +237,31 @@ StormDataDF_Economic_Property_Values_K <- StormDataDF_Economic_ %>%
                                         filter (Property_Expo = (Property_Expo == "K")) %>%
                                         select(State, Event_Type, Property_Damage, Property_Expo,
                                                Crop_Damage, Crop_Expo ) %>%
-                                        mutate(Property_Expo = 1000 )
+                                        mutate(Property_Expo = 10^3 )
+
 
 StormDataDF_Economic_Property_Values_M <- StormDataDF_Economic_ %>%
                                         filter (Property_Expo = (Property_Expo == "M")) %>%
                                         select(State,Event_Type, Property_Damage, Property_Expo,
                                                 Crop_Damage, Crop_Expo ) %>%
-                                        mutate(Property_Expo = 1000000 )
+                                        mutate(Property_Expo = 10^6 )
 
 StormDataDF_Economic_Property_Values_B <- StormDataDF_Economic_ %>%
                                         filter (Property_Expo = (Property_Expo == "B")) %>%
                                         select(State, Event_Type, Property_Damage, Property_Expo,
                                                Crop_Damage, Crop_Expo ) %>%
-                                        mutate(Property_Expo = 1000000000 )
+                                        mutate(Property_Expo = 10^9 )
 
-# selected and Replace Property damge Expo "" with 1
-StormDataDF_Economic_Property_Values_Null <- StormDataDF_Economic_ %>%
-                                        filter (Property_Expo = (Property_Expo == "")) %>%
-                                        select(State, Event_Type, Property_Damage, Property_Expo,
-                                                Crop_Damage, Crop_Expo ) %>%
-                                        mutate(Property_Expo = 1 )
+# Convert special and null character to 1
+#StormDataDF_Economic_Property_Values_Special_Char <- StormDataDF_Economic_ %>%
+#                                        filter (Property_Expo == "",
+#                                                Property_Expo == "-",
+#                                                Property_Expo == "?",
+#                                                Property_Expo == "+") %>%
+#                                        select(State, Event_Type, Property_Damage, Property_Expo,
+#                                                Crop_Damage, Crop_Expo )%>%
+#                                        mutate(Property_Expo = 1 )
+
 
 # select columns excluding those with 1,1000, 1000000, 1000000000
 StormDataDF_Economic_Property_Values_others <- StormDataDF_Economic_ %>%
@@ -269,53 +276,76 @@ StormDataDF_Economic_Property_Values_others <- StormDataDF_Economic_ %>%
 stormProperty_value_Cleaned <- rbind ( StormDataDF_Economic_Property_Values_K,
                                        StormDataDF_Economic_Property_Values_M,
                                        StormDataDF_Economic_Property_Values_B,
-                                       StormDataDF_Economic_Property_Values_Null,
+                                    #   StormDataDF_Economic_Property_Values_Special_Char,
                                        StormDataDF_Economic_Property_Values_others)
+
+stormProperty_value_Cleaned$Property_Expo <-  as.numeric(stormProperty_value_Cleaned$Property_Expo)
 
 
 #  selected and Replace Crop damge Expo "K", "M", and "B" with 1,000, ; 1,000,000 and 1,000,000,000 respectively
 StormDataDF_Economic_Crop_Values_K <- stormProperty_value_Cleaned %>%
-        filter (Crop_Expo = (Crop_Expo == "K")) %>%
-        select(State, Event_Type, Property_Damage, Property_Expo,
-               Crop_Damage, Crop_Expo ) %>%
-        mutate(Crop_Expo = 1000 )
+                                        filter (Crop_Expo = (Crop_Expo == "K")) %>%
+                                        select(State, Event_Type, Property_Damage, Property_Expo,
+                                        Crop_Damage, Crop_Expo ) %>%
+                                        mutate(Crop_Expo = 10^3 )
 
 StormDataDF_Economic_Crop_Values_M <- stormProperty_value_Cleaned %>%
-        filter (Crop_Expo = (Crop_Expo == "M")) %>%
-        select(State,Event_Type, Property_Damage, Property_Expo,
-               Crop_Damage, Crop_Expo ) %>%
-        mutate(Crop_Expo = 1000000 )
+                                        filter (Crop_Expo = (Crop_Expo == "M")) %>%
+                                        select(State,Event_Type, Property_Damage, Property_Expo,
+                                        Crop_Damage, Crop_Expo ) %>%
+                                        mutate(Crop_Expo = 10^6 )
 
 StormDataDF_Economic_Crop_Values_B <- stormProperty_value_Cleaned %>%
-        filter (Crop_Expo = (Crop_Expo == "B")) %>%
-        select(State, Event_Type, Property_Damage, Property_Expo,
-               Crop_Damage, Crop_Expo ) %>%
-        mutate(Crop_Expo = 1000000000 )
+                                        filter (Crop_Expo = (Crop_Expo == "B")) %>%
+                                        select(State, Event_Type, Property_Damage, Property_Expo,
+                                        Crop_Damage, Crop_Expo ) %>%
+                                        mutate(Crop_Expo = 10^9 )
 
-# selected and Replace Property damge Expo "" with 1
-StormDataDF_Economic_Crop_Values_Null <- stormProperty_value_Cleaned %>%
-        filter (Crop_Expo = (Crop_Expo == "")) %>%
-        select(State, Event_Type, Property_Damage, Property_Expo,
-               Crop_Damage, Crop_Expo ) %>%
-        mutate(Crop_Expo = 1 )
+# selected and Replace Property damage Expo "" with 1
+#StormDataDF_Economic_Crop_Values_Speciel_Char <- stormProperty_value_Cleaned %>%
+#                                        filter (Crop_Expo == "",
+#                                                Crop_Expo == "?") %>%
+#                                        select(State, Event_Type, Property_Damage, Property_Expo,
+#                                        Crop_Damage, Crop_Expo ) %>%
+#                                        mutate(Crop_Expo = 1 )
 
 # select columns excluding those with 1,1000, 1000000, 1000000000
 StormDataDF_Economic_Crop_Values_others <- stormProperty_value_Cleaned %>%
-        filter (Crop_Expo != "",
-                Crop_Expo != "K",
-                Crop_Expo != "M",
-                Crop_Expo != "B") %>%
-        select(State, Event_Type, Property_Damage, Property_Expo,
-               Crop_Damage, Crop_Expo )
+                                        filter (Crop_Expo != "K",
+                                                Crop_Expo != "M",
+                                                Crop_Expo != "B") %>%
+                                        select(State, Event_Type, Property_Damage, Property_Expo,
+                                        Crop_Damage, Crop_Expo )
 
 # Combined all
 stormProperty_Crop_Value_ <- rbind ( StormDataDF_Economic_Crop_Values_K,
                                        StormDataDF_Economic_Crop_Values_M,
                                        StormDataDF_Economic_Crop_Values_B,
-                                       StormDataDF_Economic_Crop_Values_Null,
+                                      # StormDataDF_Economic_Crop_Values_Speciel_Char,
                                        StormDataDF_Economic_Crop_Values_others)
+# force   Crop_Expo to numeric
+stormProperty_Crop_Value_$Crop_Expo <- as.numeric(stormProperty_Crop_Value_$Crop_Expo)
 
 
+Property_Crop_Damage <- stormProperty_Crop_Value_ %>%
+                                mutate(Propert_Value =  Property_Damage * Property_Expo,
+                                       Crop_Value = Crop_Damage * Crop_Expo) %>%
+                                group_by(Event_Type) %>%
+                                summarise(Propert_Value = sum(Propert_Value),
+                                          Crop_Value = sum(Crop_Value),
+                                n = n()) %>%
+                                arrange(Propert_Value = desc(Propert_Value),
+                                        Crop_Value = desc(Crop_Value))
 
+for (i in 1:length(K))
 
-
+if (is.na(K)) {
+        as.numeric(1)
+}
+else if (K == "K")  {
+        as.numeric(10^3)
+}
+else if (K == "M")  {
+        as.numeric(10^9)
+}else
+        0
