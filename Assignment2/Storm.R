@@ -11,19 +11,19 @@ install.packages("dplyr")
 library(dplyr)
 library(ggplot2)
 
+getwd()
+# Set correct working directory
 
 if (!file.exists("stormData")) {dir.create("stormData")}
 
 fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
 destfile <- "./stormData/storm_data.zip"
 
-getwd()
-
-# Set correct working directory
 
 download.file(fileUrl, destfile = destfile)
 dateDownloaded <- date()
 
+# Locate file and unzip
 rawStormData <- read.csv("./stormData/storm_data", header = TRUE)
 
 # Set correct working directory
@@ -217,10 +217,17 @@ Population_Health_Fatalities <- StormDataDF_Fatalities_Injury %>%
                         summarise(Fatalities = sum(Fatalities), n = n()) %>%
                         arrange(Fatalities = desc(Fatalities))
 
+# top 10
+top_Population_Health_Fatalities <- Population_Health_Fatalities[c(1:10),]
+
+
 Population_Health_Injuries <- StormDataDF_Fatalities_Injury %>%
                         group_by(Event_Type) %>%
                         summarise(Injuries = sum(Injuries), n = n()) %>%
                         arrange(Injuries = desc(Injuries))
+# top 10
+top_Population_Health_Injuries <- Population_Health_Injuries[c(1:10),]
+
 
 # Question 2
 # Across the United States, which types of events have the greatest economic consequences?
@@ -325,10 +332,16 @@ Property_Damage <- stormProperty_Crop_Value_ %>%
                                 summarise(Property_Value = sum(Property_Value), n = n()) %>%
                                 arrange(Propert_Value = desc(Property_Value))
 
+# Select top 10
+top_Property_Damage <- Property_Damage[c(1:10),]
+
 
 Crop_Damage <- stormProperty_Crop_Value_ %>%
                                 group_by(Event_Type) %>%
                                 mutate(Crop_Value = Crop_Damage * Crop_Expo) %>%
                                 summarise(Crop_Value = sum(Crop_Value), n = n()) %>%
                                 arrange(Crop_Value = desc(Crop_Value))
+
+# Select top 10
+top_Crop_Damage <-  Crop_Damage[c(1:10),]
 
