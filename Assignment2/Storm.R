@@ -68,7 +68,7 @@ rawStormDataDF_wintry <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("ice storm","ice","black ice","winter storm","winter storms","winter storm high winds","winter weather/mix","cold","thundersnow","heavy snow","blowing snow","snow","rain/snow","light snow","freezing rain","extreme windchill","blizzard","extreme cold","icy roads","avalanche","winter weather","extreme cold/wind chill","fog and cold temperatures","freezing drizzle","cold/wind chill"))
 
 # Rename Event Type to Wintry
-rawStormDataDF_wintry$Event_Type <- Wintry
+rawStormDataDF_wintry$Event_Type <- "Wintry"
 
 
 # 5 Rain
