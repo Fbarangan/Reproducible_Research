@@ -93,7 +93,7 @@ rawStormDataDF_wind <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("wind","tstm wind","high wind","high winds/snow","strong wind","strong winds","thunderstorm winds","marine strong wind","high winds","thunderstorm wind"))
 
 # Rename Event Type to Wind
-rawStormDataDF_wind$Event_Type
+rawStormDataDF_wind$Event_Type <- "Wind"
 
 
 # 8 Hurricane
