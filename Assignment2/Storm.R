@@ -26,8 +26,6 @@ dateDownloaded <- date()
 
 rawStormData <- read.csv("./stormData/storm_data", header = TRUE)
 
-getwd()
-
 # Set correct working directory
 # Change to DPLYR
 rawStormDataDF_ <- tbl_df(rawStormData)
@@ -214,13 +212,15 @@ StormDataDF_Fatalities_Injury <- stormData %>%
 
 # Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
 
-Population_Health <- StormDataDF_Fatalities_Injury %>%
+Population_Health_Fatalities <- StormDataDF_Fatalities_Injury %>%
                         group_by(Event_Type) %>%
-                        summarise(Fatalities = sum(Fatalities),
-                                  Injuries = sum(Injuries),
-                                  n = n()) %>%
-                        arrange(Fatalities = desc(Fatalities),
-                                Injuries = desc(Injuries))
+                        summarise(Fatalities = sum(Fatalities), n = n()) %>%
+                        arrange(Fatalities = desc(Fatalities))
+
+Population_Health_Injuries <- StormDataDF_Fatalities_Injury %>%
+                        group_by(Event_Type) %>%
+                        summarise(Injuries = sum(Injuries), n = n()) %>%
+                        arrange(Injuries = desc(Injuries))
 
 # Question 2
 # Across the United States, which types of events have the greatest economic consequences?
@@ -319,13 +319,16 @@ stormProperty_Crop_Value_$Crop_Expo <- as.numeric(stormProperty_Crop_Value_$Crop
 
 #  Top Events that affected Property and Crop Damage
 
-Property_Crop_Damage <- stormProperty_Crop_Value_ %>%
+Property_Damage <- stormProperty_Crop_Value_ %>%
                                 group_by(Event_Type) %>%
-                                mutate(Property_Value =  Property_Damage * Property_Expo,
-                                        Crop_Value = Crop_Damage * Crop_Expo) %>%
-                                summarise(Property_Value = sum(Property_Value),
-                                        Crop_Value = sum(Crop_Value),
-                                        n = n()) %>%
-                                arrange(Propert_Value = desc(Property_Value),
-                                        Crop_Value = desc(Crop_Value))
+                                mutate(Property_Value =  Property_Damage * Property_Expo) %>%
+                                summarise(Property_Value = sum(Property_Value), n = n()) %>%
+                                arrange(Propert_Value = desc(Property_Value))
+
+
+Crop_Damage <- stormProperty_Crop_Value_ %>%
+                                group_by(Event_Type) %>%
+                                mutate(Crop_Value = Crop_Damage * Crop_Expo) %>%
+                                summarise(Crop_Value = sum(Crop_Value), n = n()) %>%
+                                arrange(Crop_Value = desc(Crop_Value))
 
