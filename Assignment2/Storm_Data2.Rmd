@@ -13,7 +13,7 @@ knitr::opts_chunk$set(fig.width=3, fig.height=3,
         
 ```
         
-
+        
 ```{r, echo = TRUE, results="hide"}
 # Libraries loading...
 library(dplyr)
@@ -77,15 +77,15 @@ rawStormDataDF_ <- rawStormDataDF_ %>%
 * The event type where group together in order to summarize data effectively. A total of 13 groups were created. Group [Others] includes other minor event type. The method use to group the event type employs  temporarily creating a table by filtering possible event type combinations. These were then coded with the name of the group (e.g. "flood"). Afterwards, theses group were added back together using the rbind function.
 ``` {r group Event}
 
-
+        
 # 1 Storm Surge
 rawStormDataDF_stormSurge <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries, Property_Damage, Property_Expo, Crop_Damage, Crop_Expo) %>%
         filter(Event_Type %in% c ("storm surge","coastal storm","dust storm","tropical storm"))
 
 # List of Event type : "Storm Surge"
-Event_Type_Storm_Surge <- as.vector(rawStormDataDF_stormSurge$Event_Type)
-Event_Type_Storm_Surge
+Event_Type_Storm_Surge <- as.data.frame(c("storm surge","coastal storm","dust storm","tropical storm"))
+colnames(Event_Type_Storm_Surge)[1] <- "Storm Surge Category"
 
 # rename Event Type to Storm Surge
 rawStormDataDF_stormSurge$Event_Type <- "Storm Surge"
@@ -96,8 +96,8 @@ rawStormDataDF_flood <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("flooding","flood","flash flood","flood/flash flood","urban/sml stream fld"))
 
 # List of Event type : "Flood"
-Event_Type_Flood <- as.vector(rawStormDataDF_flood$Event_Type)
-Event_Type_Flood
+Event_Type_Flood <-  as.data.frame(c("flooding","flood","flash flood","flood/flash flood","urban/sml stream fld"))
+colnames(Event_Type_Flood)[1] <- "Flood Category"
 
 # rename Event_Type to Flood
 rawStormDataDF_flood$Event_Type <- "Flood"
@@ -108,8 +108,8 @@ rawStormDataDF_tornado <- rawStormDataDF_ %>%
         filter(Event_Type  %in% c("tornado","waterspout/tornado"))
 
 # List of Event type : "Tornado"
-Event_Type_Tornado <-  as.vector(rawStormDataDF_tornado$Event_Type)
-Event_Type_Tornado
+Event_Type_Tornado <-  as.data.frame(c("tornado","waterspout/tornado"))
+colnames(Event_Type_Tornado)[1] <- "Tornado Category"
 
 # Rename Event Type to tornado
 rawStormDataDF_tornado$Event_Type <- "Tornado"
@@ -120,23 +120,24 @@ rawStormDataDF_wintry <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("ice storm","ice","black ice","winter storm","winter storms","winter storm high winds","winter weather/mix","cold","thundersnow","heavy snow","blowing snow","snow","rain/snow","light snow","freezing rain","extreme windchill","blizzard","extreme cold","icy roads","avalanche","winter weather","extreme cold/wind chill","fog and cold temperatures","freezing drizzle","cold/wind chill"))
 
 # List of Event type : "Wintry"
-Event_Type_Wintry <- as.vector(rawStormDataDF_wintry$Event_Type)
-Event_Type_Wintry
+Event_Type_Wintry <- as.data.frame(c("ice storm","ice","black ice","winter storm","winter storms","winter storm high winds","winter weather/mix","cold","thundersnow","heavy snow","blowing snow","snow","rain/snow","light snow","freezing rain","extreme windchill","blizzard","extreme cold","icy roads","avalanche","winter weather","extreme cold/wind chill","fog and cold temperatures","freezing drizzle","cold/wind chill"))
+
+colnames(Event_Type_Wintry)[1] <- "Wintry Category"
 
 # Rename Event Type to Wintry
 rawStormDataDF_wintry$Event_Type <- "Wintry"
 
-
 # 5 Rain
 rawStormDataDF_Rain <- rawStormDataDF_ %>%
-        select(State, Event_Type, Fatalities, Injuries, Property_Damage, Property_Expo, Crop_Damage, Crop_Expo) %>%
-        filter(Event_Type %in% c("rain","heavy rain","excessive rainfall","dense fog","fog"))
-# Rename Event Type to rain
-rawStormDataDF_Rain$Event_Type <- "Rain"
+                select(State, Event_Type, Fatalities, Injuries, Property_Damage, Property_Expo, Crop_Damage, Crop_Expo) %>%
+                filter(Event_Type %in% c("rain","heavy rain","excessive rainfall","dense fog","fog"))
 
 # List of Event type : "Rain"
-Event_Type_Rain <- as.vector(rawStormDataDF_Rain$Event_Type)
-Event_Type_Rain
+Event_Type_Rain <- as.data.frame(c("rain","heavy rain","excessive rainfall","dense fog","fog"))
+colnames(Event_Type_Rain)[1] <- "Rain Category"
+
+# Rename Event Type to rain
+rawStormDataDF_Rain$Event_Type <- "Rain"
 
 #  6 Lightning
 rawStormDataDF_lightning <- rawStormDataDF_ %>%
@@ -144,8 +145,8 @@ rawStormDataDF_lightning <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("lightning"))
 
 # List of Event type : "Lightning"
-Event_Type_Lightning <- as.vector(rawStormDataDF_lightning$Event_Type)
-Event_Type_Lightning
+Event_Type_Lightning <- as.data.frame(c("lightning"))
+colnames(Event_Type_Lightning)[1] <- "Lightning Category"
 
 # Rename Event Type to Lightning
 rawStormDataDF_lightning$Event_Type <- "Lightning"
@@ -156,12 +157,11 @@ rawStormDataDF_wind <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("wind","tstm wind","high wind","high winds/snow","strong wind","strong winds","thunderstorm winds","marine strong wind","high winds","thunderstorm wind"))
 
 # List of Event type : "Wind"
-Event_Type_Wind <- as.vector(rawStormDataDF_wind$Event_Type)
-Event_Type_Wind
+Event_Type_Wind <- as.data.frame(c("wind","tstm wind","high wind","high winds/snow","strong wind","strong winds","thunderstorm winds","marine strong wind","high winds","thunderstorm wind"))
+colnames(Event_Type_Wind)[1] <- "Wind Category"
 
 # Rename Event Type to Wind
 rawStormDataDF_wind$Event_Type <- "Wind"
-
 
 # 8 Hurricane
 rawStormDataDF_Hurricane <- rawStormDataDF_ %>%
@@ -169,12 +169,11 @@ rawStormDataDF_Hurricane <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("hurricane","typhoon","hurricane/typhoon","tropical storm gordon"))
 
 # List of Event type : "Hurricane"
-Event_Type_Hurricane <- as.vector(rawStormDataDF_Hurricane$Event_Type)
-Event_Type_Hurricane
+Event_Type_Hurricane <- as.data.frame(c("hurricane","typhoon","hurricane/typhoon","tropical storm gordon"))
+colnames(Event_Type_Hurricane)[1] <- "Hurricane category"
 
 # Rename Event Type to Hurricane
 rawStormDataDF_Hurricane$Event_Type <- "Hurricane"
-
 
 # 9 Heat
 rawStormDataDF_Heat <- rawStormDataDF_ %>%
@@ -182,34 +181,35 @@ rawStormDataDF_Heat <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("heat","heat wave","excessive heat","heat wave drought"))
 
 # List of Event type : "Heat"
-Event_Type_Heat <- as.vector(rawStormDataDF_Heat$Event_Type)
-Event_Type_Heat
+Event_Type_Heat <- as.data.frame(c("heat","heat wave","excessive heat","heat wave drought"))
+colnames(Event_Type_Heat)[1] <- "Heat Category"
 
 # Rename Event type to Heat
 rawStormDataDF_Heat$Event_Type <- "Heat"
-
 
 # 10 Hail
 rawStormDataDF_Hail <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries, Property_Damage, Property_Expo, Crop_Damage, Crop_Expo) %>%
         filter(Event_Type %in% c("hail","tstm wind/hail"))
+        
+# List of Event type : "Hail"
+Event_Type_Hail <- as.data.frame(c("hail","tstm wind/hail"))
+colnames(Event_Type_Hail)[1] <- "Hail Category"
+        
 # Rename Event Type to Hail
 rawStormDataDF_Hail$Event_Type <- "Hail"
-
-# List of Event type : "Hail"
-Event_Type_Hail <- as.vector(rawStormDataDF_Hail$Event_Type)
-Event_Type_Hail
 
 # 11 Fire
 rawStormDataDF_Fire <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries, Property_Damage, Property_Expo, Crop_Damage, Crop_Expo) %>%
         filter(Event_Type %in% c("wild fires","wild/forest fire","wildfire"))
-# rename Event Type Fire
-rawStormDataDF_Fire$Event_Type <- "Fire"
 
 # List of Event type : "Fire"
-Event_Type_Fire <- as.vector(rawStormDataDF_Fire$Event_Type)
-Event_Type_Fire
+Event_Type_Fire <- as.data.frame(c("wild fires","wild/forest fire","wildfire"))
+colnames(Event_Type_Fire)[1] <- "Fire Category"
+
+# rename Event Type Fire
+rawStormDataDF_Fire$Event_Type <- "Fire"
 
 # 12 Sea Mishap
 rawStormDataDF_Sea <- rawStormDataDF_ %>%
@@ -217,8 +217,8 @@ rawStormDataDF_Sea <- rawStormDataDF_ %>%
         filter(Event_Type %in% c("rip current","rough surf","tsunami","high surf","marine accident","marine thunderstorm wind","marine mishap","rip currents","high wind and seas","heavy surf","heavy surf/high surf"))
 
 # List of Event type : "Sea Mishap"
-Event_Type_Sea_Mishap <- as.vector(rawStormDataDF_Sea$Event_Type)
-Event_Type_Sea_Mishap
+Event_Type_Sea_Mishap <- as.data.frame(c("rip current","rough surf","tsunami","high surf","marine accident","marine thunderstorm wind","marine mishap","rip currents","high wind and seas","heavy surf","heavy surf/high surf"))
+colnames(Event_Type_Sea_Mishap)[1] <- "Sea Mishap Category"
 
 # Rename Event type too Sea Mishap
 rawStormDataDF_Sea$Event_Type <- "Sea Mishap"
@@ -271,13 +271,14 @@ rawStormDataDF_Others <- rawStormDataDF_ %>%
                 Event_Type != "heavy surf",Event_Type != "heavy surf/high surf")
 
 # List of Event Type categorize as "Others
-
-Event_Type_Others <- as.vector(rawStormDataDF_Others$Event_Type)
-Event_Type_Others
+Event_Type_Others <- rawStormDataDF_Others %>%
+        group_by(Event_Type) %>%
+        summarise(n=n()) %>%
+        arrange(desc(n))
+colnames(Event_Type_Others)[1] <- "Others category"
 
 # rename Event type to Other
 rawStormDataDF_Others$Event_Type <- "Others"
-
 
 #Combine all cleaned tables
 stormData <- rbind(rawStormDataDF_stormSurge,
@@ -293,7 +294,6 @@ stormData <- rbind(rawStormDataDF_stormSurge,
                    rawStormDataDF_Fire,
                    rawStormDataDF_Sea,
                    rawStormDataDF_Others)
-
 ```
                 
 
@@ -555,7 +555,7 @@ Event_Type_Fire
 ```{r, results = TRUE}
 Event_Type_Sea_Mishap
 ```
-- Others
+- Others (top 10)
 ```{r,results = TRUE}
 Event_Type_Others
 ```
