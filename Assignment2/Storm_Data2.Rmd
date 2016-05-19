@@ -6,7 +6,7 @@ output:
   html_document: 
     keep_md: yes
 ---
-
+        
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width=3, fig.height=3,
                       echo=TRUE, warning=FALSE, message=FALSE, results = TRUE)
