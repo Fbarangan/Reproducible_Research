@@ -13,12 +13,13 @@ knitr::opts_chunk$set(fig.width=3, fig.height=3,
         
 ```
         
-        
+                
 ```{r, echo = TRUE, results="hide"}
 # Libraries loading...
 library(dplyr)
 library(ggplot2)
 library(knitr)
+library(reshape2)
 library(xtable)
 ```      
 
@@ -36,7 +37,7 @@ getwd()
 ```
                 
 ### Data extraction
-* Data downloaded and extracted to the designated file folder location. for OSX user, it is advisable to set metho="curl" when downloading https. Otherwise knit may not work. 
+* Data downloaded and extracted to the designated file folder location. for OSX user, it is advisable to set method="curl" when downloading https. Otherwise knit may not work. 
                 
 ```{r Create and save file, cache = TRUE }
 if (!file.exists("stormData")) {
@@ -56,28 +57,26 @@ rawStormData <- read.csv("./stormData/storm_data", header = TRUE)
 ```
 
 ### Data Processing
-There should be a section titled Data Processing which describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any pre-processing outside the document. If pre-processing is time-consuming you may consider using the cache = TRUE option for certain code chunks.
-
-* Set correct working directory. Then change file to tbl_df using DPLYR package for ease of data manipulation. The event type were selected and converted to all lower case.   
+* Set correct working directory. Then change/convert file to tbl_df using DPLYR package for ease of data manipulation. The event type were selected and converted to all lower case.   
 ```{r dplry }
 rawStormDataDF_ <- tbl_df(rawStormData)
 rawStormDataDF_$EVTYPE <- tolower(rawStormDataDF_$EVTYPE)
 
 ```
 
-* Select Variables from the raw data.
-``` {r Selecting variables}
+* Select Variables from the raw data which includes:
+``` {r Selecting variables, results=TRUE}
 rawStormDataDF_ <- rawStormDataDF_ %>%
         select(State = STATE, Event_Type = EVTYPE, Fatalities = FATALITIES, Injuries = INJURIES,
                Property_Damage = PROPDMG, Property_Expo =  (PROPDMGEXP), Crop_Damage = CROPDMG,
                Crop_Expo = (CROPDMGEXP))
+       
+names(rawStormDataDF_)               
 ```
-
-
-* The event type where group together in order to summarize data effectively. A total of 13 groups were created. Group [Others] includes other minor event type. The method use to group the event type employs  temporarily creating a table by filtering possible event type combinations. These were then coded with the name of the group (e.g. "flood"). Afterwards, theses group were added back together using the rbind function.
-``` {r group Event}
-
+                
         
+* The `r names(rawStormDataDF_[2])` where group together in order to summarize data effectively. A total of 13 groups were created. Group [Others] includes other minor event type (see Appendix). The method use to group the event type employs temporarily creating a table by filtering possible event type combinations. These were then coded with the name of the group (e.g. "flood"). Afterwards, theses group were added back together using the rbind function.
+``` {r group Event}
 # 1 Storm Surge
 rawStormDataDF_stormSurge <- rawStormDataDF_ %>%
         select(State, Event_Type, Fatalities, Injuries, Property_Damage, Property_Expo, Crop_Damage, Crop_Expo) %>%
@@ -299,6 +298,7 @@ stormData <- rbind(rawStormDataDF_stormSurge,
 
 * To answer question 1, Fatalities and Injury where extracted and filtered to show all observations with values > 0. This will decrease the number of Event type that does not show any implication to affect the number of Fatalities and Injuries incurred.
 ``` {r Fatalities and Injury exttracted}
+
 #  0 observations for Fatalities and Injuries removed
 StormDataDF_Fatalities_Injury <- stormData %>%
         select(State = State, Event_Type = Event_Type, Fatalities = Fatalities, Injuries = Injuries) %>%
@@ -446,7 +446,7 @@ Crop_Damage <- stormProperty_Crop_Value_ %>%
 ## Results
                 
 ### Discussions
-The (NOAA) storm database originally consist of `r nrow(rawStormDataDF_) ` rows with `r ncol(rawStormDataDF_)` variables. Of these `r ncol(rawStormDataDF_)` only the following were extracted to answer the question presented on this analysis:
+The (NOAA) storm database originally consist of `r nrow(rawStormDataDF_) ` rows with `r ncol(rawStormDataDF_)` variables. Of these `r ncol(rawStormDataDF_)`, only the following were extracted to answer the question presented on this analysis:
 
 * The following were the variables/columns:
 
@@ -456,12 +456,11 @@ names(rawStormDataDF_)
 
 ```
 
-1. which types of events are most harmful to population health?
-Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
+1. Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
 
 * top 10  Event type that caused the most Fatalities and Injuries were stored in a table separately. This decision is made in order to show more detailed effect of these event type to both Fatalities and Injuries. 
         
-- Top 10 Event Type that caused the most Fatalities from 1950 to 2011
+- Top 10 Event Type that caused the most Fatalities from 1950 to 2011:
 ``` {r top 10 Fatalities, results = TRUE}
         
 top_Population_Health_Fatalities <- Population_Health_Fatalities[c(1:10),]
@@ -469,7 +468,7 @@ top_Population_Health_Fatalities
 
 ```
 
-- Top 10 Event Type that caused the most injuries from 1950 to 2011
+- Top 10 Event Type that caused the most injuries from 1950 to 2011:
 ``` {r Top 10 Injuries, results = TRUE}
 
 top_Population_Health_Injuries <- Population_Health_Injuries[c(1:10),]
@@ -477,12 +476,11 @@ top_Population_Health_Injuries
 
 ```
         
-2. which types of events have the greatest economic consequences?
-Across the United States, which types of events have the greatest economic consequences?
+2. Across the United States, which types of events have the greatest economic consequences?
   
 * top 10  Event type that caused the most amount of Property Damages and Crop damages were stored in a table separately. This decision is made in order to show more detailed effect of these event type to both Property Damages and Crop damages. 
 
-- Top 10 Event type that caused the most Property damages from 1950 to 2011
+- Top 10 Event type that caused the most Property damages from 1950 to 2011:
 ``` {r top 10 Property Damage, results = TRUE}  
 
 top_Property_Damage <- Property_Damage[c(1:10),]
@@ -490,20 +488,22 @@ top_Property_Damage
 
 ```
 
-- Top 10 Event type that caused the most Crop damages from 1950 to 2011
+- Top 10 Event type that caused the most Crop damages from 1950 to 2011:
 ``` {r top 10 Crop damages, results = TRUE}
 
 top_Crop_Damage <-  Crop_Damage[c(1:10),]
 top_Crop_Damage
 
 ```
-       
-             
-main results are presented
-
+        
 ### Plots
 Show at least 3 figures Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
 
+```{r merge data for plot}
+meltPopulation_Health <- melt(StormDataDF_Fatalities_Injury)
+plot <- qplot(log(value), data = meltPopulation_Health, facets = Event_Type~., binwidth = 5, fill=State)
+              
+```
 ### Appendix
 The following list of Event Type: categorized.
 
@@ -560,3 +560,5 @@ Event_Type_Sea_Mishap
 ```{r,results = TRUE}
 Event_Type_Others
 ```
+
+
