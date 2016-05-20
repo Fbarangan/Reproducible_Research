@@ -566,7 +566,7 @@ top_Crop_Damage
         
 ### Plots
 Show at least 3 figures Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
-
+        
 
 ```r
 meltPopulation_Health <- melt(StormDataDF_Fatalities_Injury)

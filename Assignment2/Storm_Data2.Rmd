@@ -498,8 +498,8 @@ top_Crop_Damage
         
 ### Plots
 Show at least 3 figures Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
-
-```{r merge data for plot}
+        
+```{r merge data for plot, echo=TRUE}
 meltPopulation_Health <- melt(StormDataDF_Fatalities_Injury)
 plot <- qplot(log(value), data = meltPopulation_Health, facets = Event_Type~., binwidth = 5, fill=State)
               
