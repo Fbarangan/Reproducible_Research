@@ -2,10 +2,6 @@
 Felix Barangan  
 May 7, 2016  
         
-
-        
-                
-
 ```r
 # Libraries loading...
 library(dplyr)
