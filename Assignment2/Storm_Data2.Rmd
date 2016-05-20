@@ -555,6 +555,7 @@ Event_Type_Fire
 ```{r, results = TRUE}
 Event_Type_Sea_Mishap
 ```
+
 - Others (top 10)
 ```{r,results = TRUE}
 Event_Type_Others
