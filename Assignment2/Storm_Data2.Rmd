@@ -6,9 +6,9 @@ output:
   html_document: 
     keep_md: yes
 ---
-        
+                
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.width=3, fig.height=3,
+knitr::opts_chunk$set(fig.width=30, fig.height=10,
                       echo=TRUE, warning=FALSE, message=FALSE, results = TRUE)
         
 ```
@@ -501,8 +501,8 @@ Show at least 3 figures Your analysis must have no more than three figures. Figu
         
 ```{r merge data for plot, echo=TRUE}
 meltPopulation_Health <- melt(StormDataDF_Fatalities_Injury)
-plot <- qplot(log(value), data = meltPopulation_Health, facets = Event_Type~., binwidth = 5, fill=State)
-              
+plotResult <- qplot(log(value), data = meltPopulation_Health, facets = Event_Type~., binwidth = 5, fill=State)
+plotResult          
 ```
 ### Appendix
 The following list of Event Type: categorized.

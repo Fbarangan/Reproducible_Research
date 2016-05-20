@@ -1,7 +1,11 @@
 # Storm_Data
 Felix Barangan  
 May 7, 2016  
+                
+
         
+                
+
 ```r
 # Libraries loading...
 library(dplyr)
@@ -566,8 +570,11 @@ Show at least 3 figures Your analysis must have no more than three figures. Figu
 
 ```r
 meltPopulation_Health <- melt(StormDataDF_Fatalities_Injury)
-plot <- qplot(log(value), data = meltPopulation_Health, facets = Event_Type~., binwidth = 5, fill=State)
+plotResult <- qplot(log(value), data = meltPopulation_Health, facets = Event_Type~., binwidth = 5, fill=State)
+plotResult          
 ```
+
+![](Storm_Data2_files/figure-html/merge data for plot-1.png)
 ### Appendix
 The following list of Event Type: categorized.
 
