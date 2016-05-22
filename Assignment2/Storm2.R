@@ -8,8 +8,11 @@
 # Title
 #
 install.packages("dplyr")
+install.packages("reshape2")
 library(dplyr)
 library(ggplot2)
+library(reshape2)
+
 
 getwd()
 # Set correct working directory
@@ -411,5 +414,10 @@ Crop_Damage <- stormProperty_Crop_Value_ %>%
 # Select top 10
 top_Crop_Damage <-  Crop_Damage[c(1:10),]
 
-# Plot
-q <- qplot()
+mergeProperty_Crop_Value <- merge(Crop_Damage, Property_Damage, by = "Event_Type")
+
+mergeProperty_Crop_ValueDF_ <- mergeProperty_Crop_Value %>%
+                                select(Event_Type, Crop_Value, Property_Value) %>%
+                                filter(!is.na(Crop_Value))
+
+melt_mergeProperty_Crop_ValueDF_ <- melt(mergeProperty_Crop_ValueDF_)
