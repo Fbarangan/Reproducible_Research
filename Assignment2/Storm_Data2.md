@@ -565,16 +565,46 @@ top_Crop_Damage
 ```
         
 ### Plots
-Show at least 3 figures Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
-        
 
 ```r
-meltPopulation_Health <- melt(StormDataDF_Fatalities_Injury)
-plotResult <- qplot(log(value), data = meltPopulation_Health, facets = Event_Type~., binwidth = 5, fill=State)
-plotResult          
+mergeFatalities_Injury <- merge(Population_Health_Fatalities, Population_Health_Injuries, by = "Event_Type")
+
+mergeFatalities_InjuryDF_ <- mergeFatalities_Injury %>%
+        select(Event_Type, Fatalities, Injuries) %>%
+        filter(!is.na(Fatalities), !is.na(Injuries))
+
+melt_mergeFatalities_InjuryDF_ <- melt(mergeFatalities_InjuryDF_)
+               colnames(melt_mergeFatalities_InjuryDF_)[2] <- "Health_Variables"
+               colnames(melt_mergeFatalities_InjuryDF_)[3] <- "Costs"
 ```
 
-![](Storm_Data2_files/figure-html/merge data for plot-1.png)
+
+```r
+plot3 <- qplot(log(Costs), data = melt_mergeFatalities_InjuryDF_, fill= Health_Variables, binwidth = 1)
+
+plot4 <- qplot(log(Costs), data = melt_mergeFatalities_InjuryDF_, geom= "density" ,color = Health_Variables)
+```
+
+
+
+```r
+mergeProperty_Crop_Value <- merge(Crop_Damage, Property_Damage, by = "Event_Type")
+
+mergeProperty_Crop_ValueDF_ <- mergeProperty_Crop_Value %>%
+                                select(Event_Type, Crop_Value, Property_Value) %>%
+                                filter(!is.na(Crop_Value))
+
+melt_mergeProperty_Crop_ValueDF_ <- melt(mergeProperty_Crop_ValueDF_)
+colnames(melt_mergeProperty_Crop_ValueDF_)[2] <- "Economic_Variables"
+colnames(melt_mergeProperty_Crop_ValueDF_)[3] <- "Costs"
+```
+
+
+```r
+plot1 <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, fill= Economic_Variables, binwidth = 1)
+
+plot2 <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, geom= "density" ,color = Economic_Variables)
+```
 ### Appendix
 The following list of Event Type: categorized.
 
