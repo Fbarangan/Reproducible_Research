@@ -421,3 +421,10 @@ mergeProperty_Crop_ValueDF_ <- mergeProperty_Crop_Value %>%
                                 filter(!is.na(Crop_Value))
 
 melt_mergeProperty_Crop_ValueDF_ <- melt(mergeProperty_Crop_ValueDF_)
+colnames(melt_mergeProperty_Crop_ValueDF_)[2] <- "Economic_Variables"
+colnames(melt_mergeProperty_Crop_ValueDF_)[3] <- "Costs"
+
+plot1 <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, fill= Economic_Variables, binwidth = 1)
+plot2 <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, facets = Economic_Variables~., binwidth = 1)
+
+plot3 <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, geom= "density" ,color = Economic_Variables)
