@@ -580,10 +580,20 @@ melt_mergeFatalities_InjuryDF_ <- melt(mergeFatalities_InjuryDF_)
 
 
 ```r
-plot3 <- qplot(log(Costs), data = melt_mergeFatalities_InjuryDF_, fill= Health_Variables, binwidth = 1)
-
-plot4 <- qplot(log(Costs), data = melt_mergeFatalities_InjuryDF_, geom= "density" ,color = Health_Variables)
+a <- qplot(log(Costs), data = melt_mergeFatalities_InjuryDF_, fill= Health_Variables, binwidth = 1)
+plot1 <- a + labs(title = "Fatalities and Injuries")         
+print(plot1)
 ```
+
+![](Storm_Data2_files/figure-html/plot 1 and 2-1.png)
+
+```r
+b <- qplot(log(Costs), data = melt_mergeFatalities_InjuryDF_, geom= "density" ,color = Health_Variables)
+plot2 <- b + labs(title = "Fatalities and Injuries")  
+print(plot2)
+```
+
+![](Storm_Data2_files/figure-html/plot 1 and 2-2.png)
 
 
 
@@ -598,13 +608,23 @@ melt_mergeProperty_Crop_ValueDF_ <- melt(mergeProperty_Crop_ValueDF_)
 colnames(melt_mergeProperty_Crop_ValueDF_)[2] <- "Economic_Variables"
 colnames(melt_mergeProperty_Crop_ValueDF_)[3] <- "Costs"
 ```
-
+                
 
 ```r
-plot1 <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, fill= Economic_Variables, binwidth = 1)
-
-plot2 <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, geom= "density" ,color = Economic_Variables)
+c <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, fill= Economic_Variables, binwidth = 1)
+plot3 <- c + labs(title = "Property and Crop Damages")  
+print(plot3)
 ```
+
+![](Storm_Data2_files/figure-html/plot for 3 and 4-1.png)
+
+```r
+d <- qplot(log(Costs), data = melt_mergeProperty_Crop_ValueDF_, geom= "density" ,color = Economic_Variables)
+plot4 <- d + labs(title = "Property and Crop Damages")  
+print(plot4)
+```
+
+![](Storm_Data2_files/figure-html/plot for 3 and 4-2.png)
 ### Appendix
 The following list of Event Type: categorized.
 
